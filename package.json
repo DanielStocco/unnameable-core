@@ -1,0 +1,22 @@
+{
+  "name": "orgasmic-core",
+  "version": "0.0.1",
+  "description": "An easy way to start a express project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Stocco",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-winston": "^3.0.1",
+    "helmet": "^3.15.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0",
+    "type-is": "^1.6.16",
+    "winston": "^3.1.0"
+  }
+}
