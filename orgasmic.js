@@ -6,6 +6,7 @@
 const http = require('http');
 const express = require('express');
 const { getMiddlewareLogger, getLogger } = require('./libs/logger');
+const { setupRoutes } = require('./libs/router');
 const cors = require('cors');
 
 let logger;
@@ -14,7 +15,7 @@ let config;
 let app;
 
 
-function initialize(_config) {
+function initialize(_config, routes) {
     config = _config;
     app = express();
 
@@ -65,6 +66,8 @@ function initialize(_config) {
 
     // Set up response helpers.
     app.use(require('./libs/responses'));
+
+    setupRoutes(app, routes);
 
     // Error handler
     app.use((err, req, res, next) => {
