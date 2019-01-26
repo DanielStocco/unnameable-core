@@ -11,7 +11,7 @@ const { ApiError } = require('../errors/types');
 function setupRoutes(app, routes) {
 
     for(const route of routes){
-        app.use(route.uri, route.controller);
+        app.use(route.uri, route.handler);
     }
 
     // catch 404 and forward to the error handler
