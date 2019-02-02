@@ -1,6 +1,6 @@
 {
   "name": "orgasmic-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An easy way to start a express project",
   "main": "index.js",
   "scripts": {
