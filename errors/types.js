@@ -80,18 +80,6 @@ class ServerError extends BaseError {
     }
 }
 
-class BusinessError extends BaseError {
-    constructor(code, params) {
-        const errors = {
-            MISSING_LIMITS: { status: 400, code: 20, msg: 'missing_limits_settings' },
-            MISSING_FEES: { status: 400, code: 21, msg: 'missing_fees_settings' },
-            MISSING_DRIVER: { status: 400, code: 22, msg: 'driver_not_found' },
-        };
-        let err = errors[code];
-        super(err, params);
-    }
-}
-
 class ValidationError extends BaseError {
     constructor(code, fields, params) {
         const errors = {
@@ -113,45 +101,13 @@ class UserError extends BaseError {
     }
 }
 
-class LeadError extends BaseError {
-    constructor(code, params) {
-        const errors = {
-            EMAIL_ALREADY_USED: { status: 400, code: 80, msg: 'email_already_used' },
-            LEAD_CREATION_ERROR: { status: 400, code: 81, msg: 'lead_creation_error' },
-            LEAD_NOT_FOUND: { status: 400, code: 82, msg: 'lead_not_found' },
-            LEAD_INVALID_TOKEN: { status: 400, code: 83, msg: 'lead_invalid_token' },
-            LEAD_ALREADY_PROCESSED: { status: 400, code: 84, msg: 'lead_already_processed' },
-            LEAD_EXPIRED_TOKEN: { status: 400, code: 85, msg: 'lead_expired_token' },
-            LEAD_STATUS_ERROR: { status: 400, code: 86, msg: 'lead_status_error' },
-            LEAD_RETRY_ERROR: { status: 400, code: 87, msg: 'lead_retry_error' },
-
-        };
-        let err = errors[code];
-        super(err, params);
-    }
-}
-
-class ZohoError extends BaseError {
-    constructor(code, params) {
-        const errors = {
-            INVALID_TOKEN: { status: 400, code: 90, msg: 'invalid_access_token' },
-            INVALID_REFRESH_TOKEN: { status: 400, code: 90, msg: 'invalid_refresh_token_response' },
-            INTERNAL_ZOHO_ERROR: { status: 400, code: 90, msg: 'zoho_internal_error' }
-        };
-        let err = errors[code];
-        super(err, params);
-    }
-}
 
 module.exports = {
     AuthError,
     ApiError,
     ServiceError,
     ServerError,
-    BusinessError,
     ValidationError,
     UserError,
-    LeadError,
-    ZohoError,
     BaseError
 };
