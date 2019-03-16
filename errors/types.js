@@ -152,5 +152,6 @@ module.exports = {
     ValidationError,
     UserError,
     LeadError,
-    ZohoError
+    ZohoError,
+    BaseError
 };

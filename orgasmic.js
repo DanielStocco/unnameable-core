@@ -8,6 +8,8 @@ const express = require('express');
 const { getMiddlewareLogger, getLogger } = require('./libs/logger');
 const { setupRoutes } = require('./libs/router');
 const cors = require('cors');
+const { BaseError, ApiError, ServerError } = require('./errors/types');
+
 
 let logger;
 let _server;
@@ -70,20 +72,7 @@ function initialize(_config, routes) {
     setupRoutes(app, routes);
 
     // Error handler
-    app.use((err, req, res, next) => {
-        if (res.headersSent) {
-            return next(err);
-        }
-        // set locals, only providing error in development
-        res.locals.message = err.message;
-        res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-        // @@ TODO: return a better error message when there's a 500 internal error.
-        // @@ TODO: return a specific error depending on the Error instance!
-        // middlewareLogger.log('-- Error Type: ', err.constructor.name);
-        // middlewareLogger.error('--- ERROR: ', err.toObject());
-        return res.status(err.status).json(err.toObject());
-    });
+    app.use(_genericErrorHandler);
 
     return { app, logger };
 }
@@ -160,6 +149,22 @@ function _onListening() {
     const addr = _server.address();
     const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
     logger.info('Listening on ' + bind);
+}
+
+// @@TODO Cconsiderar mover al directorio libs.
+function _genericErrorHandler(err, req, res, next) {
+    if (res.headersSent) {
+        return next(err);
+    }
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    logger.error(err);
+    if (err instanceof BaseError) {
+        return res.status(err.status).json(err.toObject());
+    }
+    return res.status(500).json((new ServerError('INTERNAL_ERROR')).toObject());
 }
 
 module.exports = {
