@@ -5,8 +5,9 @@
  */
 const http = require('http');
 const express = require('express');
-const { getMiddlewareLogger, getLogger } = require('./libs/logger');
+const { getMiddlewareLogger, getLogger, initLogger } = require('./libs/logger');
 const { setupRoutes } = require('./libs/router');
+const { runPlugins } = require('./libs/plugins');
 const cors = require('cors');
 const { BaseError, ApiError, ServerError } = require('./errors/types');
 
@@ -34,7 +35,8 @@ function initialize(_config, routes) {
     // logger initialization
     const middlewareLogger = getMiddlewareLogger(config);
     app.use(middlewareLogger);
-    logger = getLogger(config);
+    initLogger(config);
+    logger = getLogger();
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
@@ -77,7 +79,10 @@ function initialize(_config, routes) {
     return { app, logger };
 }
 
-function run() {
+function run(plugins) {
+
+    runPlugins(plugins);
+
     /**
      * Get port from environment and store in Express.
      */

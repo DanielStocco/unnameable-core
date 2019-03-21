@@ -1,6 +1,7 @@
 module.exports = {
     getMiddlewareLogger,
     createErrorLogger,
+    initLogger,
     getLogger
 };
 
@@ -8,6 +9,7 @@ const winston = require('winston');
 const expressWinston = require('express-winston');
 const moment = require('moment');
 const _ = require('lodash');
+let _logger;
 
 function getMiddlewareLogger(config) {
     expressWinston.requestWhitelist = _.remove(expressWinston.requestWhitelist, el => el !== 'originalUrl');
@@ -41,17 +43,21 @@ function createErrorLogger(config) {
     });
 }
 
-function getLogger(config) {
+function initLogger(config) {
     const env = process.env.NODE_ENV || 'development';
     const format = getFormat(config, env);
     const transports = getTransports(config, env);
-    return winston.createLogger({
+    _logger = winston.createLogger({
         transports,
         statusLevels: true,
         level: config.get('logger.level'),
         requestFilter: filterReqData,
         format
     });
+}
+
+function getLogger() {
+    return _logger;
 }
 
 function setLogSrc(config, env) {
