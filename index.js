@@ -1,6 +1,6 @@
 module.exports = {
-    orgasmic: require('./orgasmic'),
-    orgasmicErrors: require('./errors/types'),
-    orgasmicLogger: require('./libs/logger'),
-    orgasmicRouter : require('./libs/router').router
+    orgasmic: require('./unnameable'),
+    errors: require('./errors/types'),
+    logger: require('./libs/logger'),
+    router : require('./libs/router').router
 };
