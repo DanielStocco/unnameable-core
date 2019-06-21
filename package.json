@@ -1,6 +1,6 @@
 {
   "name": "unnameable-core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An easy way to start a express project",
   "main": "index.js",
   "scripts": {
