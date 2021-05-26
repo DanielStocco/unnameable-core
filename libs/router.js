@@ -11,7 +11,7 @@ const { ApiError } = require('../errors/types');
 function setupRoutes(app, routes) {
     for(const [moduleName, module] of Object.entries(routes)){
         module.map(route => {
-            const path = `/${moduleName}${route.uri}`
+            const path = `/${moduleName.toLowerCase()}${route.uri}`
             if (route.get) app.get(path, route.get);
             if (route.create) app.post(path, route.create);
             if (route.update) app.put(path, route.update);
